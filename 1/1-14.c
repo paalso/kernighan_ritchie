@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <math.h>
 
-#define MAX_HISTO_LEN 500
+#define MAX_HISTO_LEN 100
 
 void printHorizontalHistogram(int);
 
