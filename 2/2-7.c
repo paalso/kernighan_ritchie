@@ -1,12 +1,12 @@
-﻿// Упражнение 2.6. Напишите функцию setbits(x, p, n,y), возвращающую
-// значение х, в котором п битов, начиная с р-й позиции, заменены на п правых
-// разрядов из у (остальные биты не изменяются).
+// Упражнение 2.7. Напишите функцию invert (х, р, п), возвращающую
+// значение х с инвертированными п битами, начиная с позиции р (остальные
+// биты не изменяются).
 
 
 #include <stdio.h>
 #include <stdbool.h>
 
-unsigned int setbits(unsigned int x,int p,int n, unsigned int y);
+unsigned int invert(unsigned int x, int p, int n);
 
 void print_bits(unsigned int);
 void print_reversed_array(int*, int);
@@ -15,7 +15,6 @@ void print_reversed_array(int*, int);
 // -------------------------------- Main --------------------------------
 int main(void) {
     unsigned int number, new_number;
-    unsigned int y = 253016411;
     int pos, len;
 
     printf("Input an unsigned integer number:\n");
@@ -25,22 +24,19 @@ int main(void) {
     printf("Length of the segment: ");
     scanf("%d", &len);
 
-    printf("Mask number = %u :\n", y);
-    print_bits(y);
-
     printf("\nTransformation...\n");
-    new_number = setbits(number, pos, len, y);
+    new_number = invert(number, pos, len);
     printf("\nOriginal and result:\n");
     print_bits(number);
-    print_bits(new_number);,ь
+    print_bits(new_number);
     printf("%u\n", new_number);
-}ь 
+} 
 
 // ---------------------------------------------------------
-unsigned int setbits(unsigned int x, int p, int n, unsigned int y) {
+unsigned int invert(unsigned int x, int p, int n) {
     int shift = p - n + 1;
-    unsigned int mask = y & ~(~0 << n);
-    return ((((x >> shift) & (~0 << n)) | mask) << shift) | x & ~(~0 << shift);
+    unsigned int mask = ~(~0 << n);
+    return (((x >> shift) ^ mask) << shift) | x & ~(~0 << shift);
 }
 
 // ---------------------------------------------------------
