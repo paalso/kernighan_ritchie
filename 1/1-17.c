@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define MAXLINE 10000
-#define LIMIT 5	// 80
+#define LIMIT 10 // 80
 
 // -------------------------------- Prototypes --------------------------------
 int getLine(char[]);

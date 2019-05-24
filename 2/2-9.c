@@ -46,7 +46,7 @@ void print_bits(unsigned int number) {
     }
     print_reversed_array(bit_array, size);
 }
-
+gt
 // ---------------------------------------------------------
 void print_reversed_array(int *array, int len) {
     for (int i = len - 1; i >= 0; --i)
