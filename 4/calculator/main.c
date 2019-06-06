@@ -1,12 +1,8 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h> /* для atof() */
+#include "calc.h"
 
 #define MAXOP 100  /* макс. размер операнда или оператора */
-#define NUMBER '0' /* признак числа */
-
-int getop (char []);
-void push (double);
-double pop (void);
 
 /* калькулятор с обратной польской записью */
 int main()

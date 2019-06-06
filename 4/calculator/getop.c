@@ -1,11 +1,8 @@
-#include <string.h>
-#include <stdio.h>
+﻿#include <stdio.h>
+#include <ctype.h>
+#include "calc.h"
 
 #define NUMBER '0'
-
-
-int getch(void);
-void ungetch(int);
 
 /* getop: получает cледующий оператор или операнд */
 int getop(char s[])

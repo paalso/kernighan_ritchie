@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "calc.h"
+
 #define MAXVAL 100  /* максимальная глубина стека */
 
 int sp = 0;         /* следующая свободная позиция в стеке */
