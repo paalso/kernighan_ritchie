@@ -21,16 +21,14 @@ int main(void) {
 
 // ---------------------------------------------------------
 int shellsort(int array[], int len) {
-
-    for (int gap = len / 2; gap > 0; gap \= 2) {
-
-        for (int i = gap; i < len; ++i) {
-            
-        }
-        
-    }
-    
-    // swap(array, 0, 2);
+    int iters = 0;
+    for (int gap = len / 2; gap > 0; gap /= 2)
+        for (int i = gap; i < len; ++i)
+            for (int j = i - gap; j >= 0 && array[j + gap] < array[j]; --j) {
+                swap(array, j + gap, j);
+                printf("iters: %2d, gap = %2d   : ", ++iters, gap);
+                print_int_arr(array, len);
+            }
 
 }
 
