@@ -8,46 +8,19 @@
 int main()
 {
     int type;
+    int len = 0;
+    int pos = 0;
     double op2;
     char s[MAXOP];
+    char word[MAXOP];
 
-    while ((type = getop (s)) != EOF) {
-        switch (type) {
-        case NUMBER:
-            push (atof(s));
-            break;
-        case '+':
-            push (pop() + pop());
-            break;
-        case '*':
-            push (pop() * pop());
-            break;
-        case '-':
-            op2 = pop();
-            push (pop() - op2);
-            break;
-        case '/':
-            op2 = pop();
-            if (op2 != 0.0)
-                push (pop() / op2);
-            else
-                printf("ошибка: деление на нуль\n");
-            break;
-        // Упражнение 4-3. дополните программу- калькулятор таким образом, 
-        // чтобы она "понимала" оператор получения остатка от деления (%)
-        case '%':   
-            op2 = pop();
-            if (op2 != 0)
-                push ((int) pop() % (int) op2);
-            else
-                printf("ошибка: деление на нуль\n");
-            break;
-        case '\n':
-            printf("\t%.8g\n", pop());
-            break;
-        default:
-            printf("ошибка: неизвестная операция %s\n", s);
-            break;
+    //aa bb
+
+    while ((len = get_line(s)) > 0) {
+        int position = 0;
+        while(position < len) {
+            position = get_word(position, s, word);
+            printf("%s ",word);
         }
     }
     return 0;

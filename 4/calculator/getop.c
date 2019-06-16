@@ -1,30 +1,20 @@
 ﻿#include <stdio.h>
 #include <ctype.h>
-#include "calc.h"
+#include <string.h>
+// #include "calc.h"
 
-#define NUMBER '0'
+#define NUMBER 0
+#define MATH_OP 1
+#define MATH_FUN 2
+#define STACK_OP 3
+#define VAR 4
 
-/* getop: получает cледующий оператор или операнд */
-int getop(char s[])
-{
-    int i, c;
-    while ((s[0] = c = getch()) == ' ' || c == '\t')
-        ;
-    s[1] = '\0';
-    if (!isdigit(c) && c != '.' && c != '-')    // Упражнение 4.3. ...дополните программу - 
-        return c;    /* не чиcло */             // калькулятор таким образом, чтобы она "понимала" 
-    i = 0;                                      // оператор получения остатка от деления (%) и отрицательные числа
-    if (c == '-' && i > 0)
-            return c;   /* не чиcло */
-    if (isdigit(c) || c == '-') /* накапливаем целую чаcть */
-        while (isdigit(s[++i] = c = getch()))
-            ;
-    if (c =='.') /* накапливаем дробную чаcть */
-    while (isdigit(s[++i] = c = getch()))
-            ;
-    s[i] = '\0';
-    if (c != EOF)
-        ungetch(c);
+char math_operations[] = {"+", "-", "*", "/", "%"};
+char math_functions[] = {"sin", "exp", "pow"};
+char stack_operations[] = {"top", "double", "inverse"};
 
-    return NUMBER;
+int getop(char s[]) {
+    if (strlen(s) == 1 && isalpha(s[0]))
+        return VAR;
+    return 0;
 }
