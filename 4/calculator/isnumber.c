@@ -1,8 +1,17 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "calc.h"
+
+/*
+#define NUMBER 0
+#define MATH_OP 1
+#define MATH_FUN 2
+#define STACK_OP 3
+#define VAR 4
+#define ERR 5
 
 char *math_operations[] = {"+", "-", "*", "/", "%"};
 int math_operations_len = 5;
@@ -10,8 +19,8 @@ int math_operations_len = 5;
 char *math_functions[] = {"sin", "exp", "pow"};
 int math_functions_len = 3;
 
-char *stack_operations[] = {"top", "double", "inv", "prnlst", "take"};
-int stack_functions_len = 5;
+char *stack_operations[] = {"top", "double", "inv", "prnlst"};
+int stack_functions_len = 4;
 
 _Bool is_number(char s[]) {
     int i = 0;
@@ -21,11 +30,10 @@ _Bool is_number(char s[]) {
     if (s[0] == '-')
         ++i;
     if (s[i] == '\0')
-        return false; 
+        return false;    
 
     for (; isdigit(c = s[i]) && c != '\0'; ++i)
         ;
-
     if (c == '\0')
         return true;
 
@@ -87,4 +95,23 @@ int getop(char s[]) {
     return ERR;
 
     return 0;
+}
+*/
+
+
+int main() {
+
+    char s[20];
+
+    printf("Input a string:\n");
+    scanf("%s", s);
+    printf("Operation = %d\n",getop(s));
+    printf("Is number = %d\n",is_number(s));
+    if (is_number(s))
+        printf("Number = %g\n",atof(s));
+    // for (int i = 0; i < 5; ++i)
+    //     printf("%d\n",strcmp (ops[i], s));
+
+
+ return 0;
 }

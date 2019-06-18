@@ -7,7 +7,12 @@
 
 void push (double);
 double pop (void);
+double take (void);
+void print_stack(void);
+
+_Bool is_number(char []);
 int getop (char []);
+
 int getch(void);
 int get_line();
 int get_word(int, char[], char[]);
