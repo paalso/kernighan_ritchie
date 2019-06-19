@@ -3,12 +3,17 @@
 #define MATH_FUN 2
 #define STACK_OP 3
 #define VAR 4
-#define ERR 5
+#define COMMAND 5
+#define ERR 6
 
-void push (double);
-double pop (void);
-double take (void);
+double double_top(void);
+void clear(void);
+void inv(void);
 void print_stack(void);
+double pop(void);
+void push(double);
+double top(void);
+
 
 _Bool is_number(char []);
 int getop (char []);

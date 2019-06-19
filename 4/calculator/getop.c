@@ -10,8 +10,12 @@ int math_operations_len = 5;
 char *math_functions[] = {"sin", "exp", "pow"};
 int math_functions_len = 3;
 
-char *stack_operations[] = {"top", "double", "inv", "prnlst", "take"};
+char *stack_operations[] = {"top", "double", "inv", "stack", "clear"};
 int stack_functions_len = 5;
+
+char *commands[] = {"quit", "exit", "last"};
+int commands_len = 3;
+
 
 _Bool is_number(char s[]) {
     int i = 0;
@@ -77,6 +81,10 @@ int getop(char s[]) {
     for (int i = 0; i < stack_functions_len; ++i)
         if (strcmp(stack_operations[i], s) == 0)
             return STACK_OP;
+
+    for (int i = 0; i < commands_len; ++i)
+        if (strcmp(commands[i], s) == 0)
+            return COMMAND;
 
     if (strlen(s) == 1 && isalpha(s[0]))
         return VAR;

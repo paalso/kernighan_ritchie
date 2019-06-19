@@ -3,6 +3,7 @@
 #include <string.h> /* для strcmp */
 #include <ctype.h> /* для tolower */
 #include <math.h> /* для sin, exp, pow*/
+#include <stdbool.h> /* для sin, exp, pow*/
 #include "calc.h"
 
 #define MAXOP 100  /* макс. размер операнда или оператора */
@@ -16,12 +17,15 @@ int main()
     int vars[26];
     char s[MAXOP];
     char word[MAXOP];
-
+    _Bool to_exit = false;
+    double last;
 
     for (int i = 0; i < 26; ++i)
         vars[i] = 0;
 
-    while ((len = get_line(s)) > 0) {
+    // while (true) {
+    // while ((len = get_line(s)) > 0) {
+    while ((len = get_line(s)) > -1) {
         int position = 0;
         while(position < len) {
          
@@ -71,14 +75,31 @@ int main()
             case VAR:
                 index = tolower(word[0]) - 'a';
                 if (vars[index] == 0)
-                    vars[index] = take();
+                    vars[index] = top();
                 else
                     push(vars[index]);
                 break;                
 
             case STACK_OP:
-                if (!strcmp(word, "prnlst"))
+                if (!strcmp(word, "stack"))
                     print_stack();
+                else if (!strcmp(word, "inv"))
+                    inv();
+                else if (!strcmp(word, "double"))
+                    double_top();
+                // else if (!strcmp(word, "top"))
+                //     printf("\t%.8g\n", top());
+                else if (!strcmp(word, "clear"))
+                    clear();
+                break;
+
+            case COMMAND:
+                if (!strcmp(word, "last"))
+                    printf("last output: %g", last);
+                else if (!strcmp(word, "quit") || !strcmp(word, "exit")) {
+                    to_exit = true;
+                    break;
+                }
                 break;
 
             default:
@@ -87,7 +108,12 @@ int main()
             }
         }
 
-        printf("\t%.8g\n", pop());
+        last = top();
+        printf("top: \n\t%.8g\n", last);
+        if (to_exit) {
+            printf("Exiting...\n");
+            return 0;
+        }
     }
     return 0;
 }

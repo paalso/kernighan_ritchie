@@ -21,19 +21,19 @@ double pop(void)
     if (sp > 0)
         return val[--sp];
     else {
-        printf ("ошибка: стек пуст\n");
-    return 0.0;
+        printf ("error: stack empty\n");
+        return 0.0;
     }
 }
 
-/* take: копировать с вершины стека*/
-double take(void)
+/* top: копировать с вершины стека*/
+double top(void)
 {
     if (sp > 0)
-        return val[sp];
+        return val[sp - 1];
     else {
-        printf ("ошибка: стек пуст\n");
-    return 0.0;
+        printf ("stack empty\n");
+        return 0.0;
     }
 }
 
@@ -46,4 +46,36 @@ void print_stack(void)
         printf("%g ",val[i]);
     }
     printf("\n");
+}
+
+/* inv: поменять местами два элемента с вершины стека с вершины стека*/
+void inv(void)
+{
+    if (sp > 1)
+    {
+        double tmp = val[sp - 1];
+        val[sp - 1] = val[sp - 2];
+        val[sp - 2] = tmp;
+    }
+}
+
+/* double_top: дублирует верхний элемент стека*/
+double double_top(void)
+{
+    if (sp > 0)
+    {
+        ++sp;
+        val[sp - 1] = val[sp - 2];
+        return val[sp - 1];
+    }
+    else {
+        printf ("error: stack empty\n");
+    return 0.0;
+    }
+}
+
+/* clear: очищает стек*/
+void clear(void)
+{
+    sp = 0;
 }
