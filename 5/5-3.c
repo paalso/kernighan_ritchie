@@ -4,13 +4,11 @@
 #define MAXLINE 20
 
 void strcat(char *s, char *t) {
-    for (; *s; ++s)
+    while(*s)
+        s++;
+
+    while(*s++ = *t++)
         ;
-
-    for (; *t; ++s, ++t)
-        *s = *t;
-
-    *s = '\0';
 }
 
 // --- main -----------------------------------------
