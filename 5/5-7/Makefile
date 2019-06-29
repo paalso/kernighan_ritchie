@@ -1,7 +1,7 @@
 all: sortlines
 
 clean:
-	rm -rf *.o
+	rm -rf *.o *.exe *.stackdump
 
 sortlines: main.o handle_lines.o sort.o
 	gcc main.o handle_lines.o sort.o -o sortlines
