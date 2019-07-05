@@ -12,7 +12,7 @@ void push(double f)
     if (sp < MAXVAL)
         val[sp++] = f;
     else
-        printf("ошибка: стек полон, %g не помещается\n", f);
+        printf("error: stack full, can't push %g\n", f);
 }
 
 /* pop: взять с вершины стека и выдать в качестве результата */
