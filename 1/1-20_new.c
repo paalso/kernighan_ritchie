@@ -40,14 +40,11 @@ int get_line(char s[]) {
 void detab(const char from[], char to[]) {
     int c;
     int j = 0;
-    for (int i = 0; (c = from[i]) != '\0'; ++i) {
-        if (c == '\t') {
+    for (int i = 0; (c = from[i]) != '\0'; ++i)
+        if (c == '\t')
             for (int k = 0, blanc_pos = TAB_POS - j % TAB_POS; k < blanc_pos; ++k)
                 to[j++] = ' ';
-        }
-        else {
+        else
             to[j++] = c;
-        }
-    }
     to[j] = '\0';
 }

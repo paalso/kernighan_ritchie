@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 #define MAX_LEN 100
-#define TAB_POS 4
+#define TAB_POS 8
 
 #define MAX(x,y)    ((x) > (y) ? (x) : (y))
 
@@ -51,21 +51,20 @@ int get_line(char s[]) {
 void entab(const char from[], char to[]) {
     int c, i = 0, j = 0;
     while((c = from[i]) != '\0') {
-        if (c == ' ')                                   // если встретился пробел
+        if (c == ' ')
         {
             int count_blancs = 1;
-            while((c = from[i + count_blancs]) == ' ')  // считаем сколько с этого места 
-                count_blancs += 1;                      // идет пробелов подряд - count_blancs
-            
-            if (count_blancs > 1)   // && i + count_blancs > TAB_POS
-            {                       // если таки подряд идет больше одного пробела
-                int next_position = i + count_blancs;   // следующая позиция с непробельным символом
-                int last_tab_position = (next_position / TAB_POS) * TAB_POS; 
+            while((c = from[i + count_blancs]) == ' ')
+                count_blancs += 1;
+            if (count_blancs > 1)    // && i + count_blancs > TAB_POS
+            {
+                int next_position = i + count_blancs;
+                int last_tab_position = (next_position / TAB_POS) * TAB_POS;
                 int tabs_count = next_position / TAB_POS - (i + TAB_POS) / TAB_POS + 1;
                 int extra_blancs_count = next_position - MAX(last_tab_position, i);
-                for (int k = 0; k < tabs_count; ++k)    // добиваем до tabs_count табуляциями
-                    to[j++] = '\t';                     
-                for (int k = 0; k < extra_blancs_count; ++k)    // добиваем до next_position пробелами
+                for (int k = 0; k < tabs_count; ++k)
+                    to[j++] = '\t';
+                for (int k = 0; k < extra_blancs_count; ++k)
                     to[j++] = ' ';
                 i = next_position;
             }
