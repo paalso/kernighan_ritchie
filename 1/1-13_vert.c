@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define SYMBOL '#'
 #define MAX_LENGTH 45
-#define HISTO_LEN_PER_ITEM 7
+#define MAX_HISTO_ROW_LEN 22
 
 void print_line(int[], int, int);
 
@@ -50,27 +51,30 @@ int main(void)
     while (word_length[upper_lim] == 0)
         upper_lim -= 1;
 
-    // Find non-zero elements number
-    int non_zero = 0;
-    for (int i = 0; i <= upper_lim; ++i)
-        if (word_length[i])
-            non_zero += 1;
+    int max_index = 0;                      // соответствует наиболее часто встречающейся длине слова
+    for (int i = 1; i <= upper_lim; ++i)             // будет соответствать ряду гистограммы
+        if (word_length[i] > word_length[max_index]) // максимальной фиксированной длиной 
+                max_index = i;                       // MAX_HISTO_ROW_LEN
 
-    // расчет данных для вывода
-    int hysto_lens[upper_lim];
-    int max_height = 0;
-    for (int i = 0; i <= upper_lim; ++i) {
-        share = (float) word_length[i] / total_words;
-        int current = hysto_lens[i] = (int)(share * HISTO_LEN_PER_ITEM * non_zero);
-        if (current > max_height)
-            max_height = current;
-    }
+    // масштаб пересчета в длину горизонтального ряда гистограммы
+    float scale = (float) word_length[max_index] / MAX_HISTO_ROW_LEN;
 
-    for (; hysto_lens[upper_lim] == 0; --upper_lim)
+    int hysto_lens[upper_lim];              // массив с длинами рядов гистограмм
+    for (int i = 0; i <= upper_lim; ++i) 
+        hysto_lens[i] = (int)(word_length[i] / scale);
+
+    for (; hysto_lens[upper_lim] == 0; --upper_lim) // последний ряд с ненулевой длиной гистограммы
         ;
 
+// вычисляем значение share и длину гистограммы в ряду "прочие"
+    int sum_of_others = word_length[0];
+    for (int i = upper_lim + 1; i < MAX_LENGTH; ++i)
+        sum_of_others += word_length[i];
+
+    hysto_lens[0] = (int)(sum_of_others / scale);
+
     printf("\n");
-    for (int i = max_height; i > 0; --i)
+    for (int i = MAX_HISTO_ROW_LEN; i > 0; --i)
         print_line(hysto_lens, upper_lim, i);
 
     // печать подписей: 1, 2, ....
@@ -86,8 +90,8 @@ int main(void)
 
 void print_line(int array[], int width, int level) {
     for (int i = 1; i <= width; ++i)
-        printf(" %c", level <= array[i] ? '*' : ' ');
+        printf(" %c", level <= array[i] ? SYMBOL : ' ');
     printf("  ");
-    printf(" %c", level <= array[0] ? '*' : ' ');
+    printf(" %c", level <= array[0] ? SYMBOL : ' ');
     putchar('\n');
 }

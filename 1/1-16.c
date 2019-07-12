@@ -27,7 +27,7 @@ int main(void)
     if (maxLen > 0) {
         printf("\nLongest line:\n");
         printf("%s", maxStr);
-        printf(";It's length: %d", maxLen);
+        printf("It's length: %d", maxLen);
     } else {
         printf("Alas, empty file\n");
     }
