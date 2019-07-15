@@ -22,7 +22,7 @@ _Bool is_number(char s[]) {
     int digits = 0;
     int c;
 
-    if (s[0] == '-')
+    if ((c = s[i]) == '-' || c == '+' )
         ++i;
     if (s[i] == '\0')
         return false; 
