@@ -10,7 +10,7 @@ int is_leap(int);
 int checkdate(int, int, int);
 int check_yearday(int, int);
 
-static int (*daytab)[13] = {
+static int daytab[][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
@@ -65,7 +65,7 @@ int check_yearday(int year, int yearday) {
 int day_of_year(int year, int month, int day) {
     int leap_index = is_leap(year);
     for (int i = 1; i < month; ++i)
-        day += daytab[leap_index][i];
+        day += *(*(daytab + leap_index) + i);
     return day;
 }
 
@@ -74,7 +74,7 @@ void month_day(int year, int yearday, int *pmonth, int *pday) {
     int leap_index = is_leap(year);
     *pmonth = 1;
     for (; yearday > 0; *pmonth += 1)
-        yearday -= daytab[leap_index][*pmonth];
+        yearday -= *(*(daytab + leap_index) + *pmonth);
     *pmonth -= 1;
-    *pday = yearday + daytab[leap_index][*pmonth];
-}   
+    *pday = yearday + *(*(daytab + leap_index) + *pmonth);
+}                      
