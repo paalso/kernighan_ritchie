@@ -12,19 +12,21 @@ int getword(char *word, int lim) {
     // while ((c = getch()) == ' ' || c == '\t')
     while (isspace(c = getch()))
         ;
-    if (c == EOF)
-        return -1;
-    
-    *w = c;
+    if (c != EOF)
+        *w++ = c;
+
     if (!isalpha(c)) {
-        *++w = '\0';
-        return word[0];
+        *w = '\0';
+        return c;
     }
 
-    while(--lim > 0 && (isalpha((c = getch())) || isdigit(c)))
-        *++w = c;
-    *++w = '\0';
-    ungetch(c);
+    for(; --lim > 0; w++) {
+        if (! isalnum(*w = getch())) {
+            ungetch(*w);
+            break;
+        }
+    }
+    *w = '\0';
 
     return word[0];
 }
