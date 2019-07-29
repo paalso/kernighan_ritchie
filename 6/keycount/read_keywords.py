@@ -1,21 +1,21 @@
-from sys import argv, exit
+def file_search(folder, filename):
+    for item in folder:
+        if isinstance(item, str):
+            # print(item + " == " + filename + " : " + item == filename)
+            print(f"{item} == {filename} : {item == filename}")
+            if item == filename:
+                return True
+        else:
+            print(item)
+            file_search(item, filename)
+    return False
 
 
-def load_keywords(filename):
-    keywords_file = open(filename, 'r')
-    keywords = []
-    for line in keywords_file:
-        keywords.append(line.rstrip('\n'))
-    keywords_file.close()
-    return keywords
+# result = file_search(['C:', 'backup.log', 'ideas.txt'], 'ideas.txt')
+# print(result)
 
+# result = file_search([ 'D:', ['recycle bin'], ['tmp', ['old'], ['new folder1', 'asd.txt', 'asd.bak', 'find.me.bak' ] ], 'hey.py'], 'find.me')
+# print(result)
 
-def main():
-    # keywords = load_keywords(argv[1])
-    keywords = load_keywords("keywords_list.txt")
-    for word in keywords:
-        print('{0}{1}{0}, 0,'.format('"', word))
-
-
-if __name__ == "__main__":
-    main()
+result = file_search([ '/home', ['user1'], ['user2', ['my pictures'], ['desktop', 'not this', 'and not this', ['new folder', 'hereiam.py' ] ] ], 'work.ovpn', 'prometheus.7z', ['user3', ['temp'], ], 'hey.py'], 'hereiam.py')
+print(result)

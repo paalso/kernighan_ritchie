@@ -17,26 +17,28 @@ int count_word(char *word, key tab[], int tab_size);
 int main(int argc, char const *argv[])
 {
 
-    const char *allowed_symbols = "_-#0123456789";
     int NKEYS = sizeof(keytab) / sizeof(key);
     int PNKEYS = sizeof(pre_keytab) / sizeof(key);
 
     char prev_word[MAX_LEN], word[MAX_LEN];
     int pos;
-    int inside_string = 0;
-    int inside_comment = 0;
-
-    getword(prev_word, MAX_LEN);
-
-    count_word(prev_word, pre_keytab, PNKEYS);
-    count_word(prev_word, keytab, NKEYS);
+    int in_string = 0;
+    int in_comment = 0;    // комментарий типа /*
+    // int in_comment2 = 0;    // комментарий типа //
 
     while(getword(word, MAX_LEN) != EOF) {
-
-        // printf("%s\n",word);
-        count_word(word, pre_keytab, PNKEYS);
-        count_word(word, keytab, NKEYS);
-
+        if (!strcmp(word, "/*") && !in_string && !in_comment) 
+            in_comment = 1;
+        else if (!strcmp(word, "\"") && !in_string && !in_comment)
+            in_string = 1;
+        else if (!strcmp(word, "\"") && in_string && !in_comment)
+            in_string = 0;
+        else if (!strcmp(word, "*/") && !in_string && in_comment)
+            in_comment = 0;
+        else if (!in_string && !in_comment) {
+            count_word(word, pre_keytab, PNKEYS);
+            count_word(word, keytab, NKEYS);            
+        }
     }
 
     print_tab(keytab, NKEYS, "Keywords:");
@@ -45,14 +47,14 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-
+// ищет прочитанное слово в таблице, при нахождении учитывает это в таблице
 int count_word(char *word, key tab[], int tab_size) {
     int pos;
     if((pos = binsearch(word, tab, tab_size)) > -1)
         tab[pos].count += 1;        
 }
 
-
+// печатает (заполненную) таблицу
 void print_tab(key tab[], int len, char *word) {
     printf("\n%s\n", word);
     for (int i = 0; i < strlen(word); ++i)

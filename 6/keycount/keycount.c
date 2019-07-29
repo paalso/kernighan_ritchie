@@ -23,7 +23,7 @@ key keytab[] = {
     "_Noreturn", 0,
     "_Static_assert", 0,
     "_Thread_local", 0,
-    
+
     "auto", 0,
     "break", 0,
     "case", 0,
