@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LEN 10
+#define MAX_LEN 15
 
 typedef struct key {
     char *word;
@@ -10,7 +10,8 @@ typedef struct key {
 } key;
 
 int getword(char *word, int lim);
-int binsearch(char *word, key keytab[], int);
+key* binsearch(char *word, key *keytab, int);
+void print_tab(key*, int, char*);
 
 key keytab[] = {
     "_Alignas", 0,
@@ -63,41 +64,47 @@ key keytab[] = {
 
 int main(int argc, char const *argv[])
 {
-    const char *allowed_symbols = "_-#0123456789";
     int NKEYS = sizeof(keytab) / sizeof(key);
 
     char s[MAX_LEN];
-    int pos;
-    int inside_string = 0;
-    int inside_comment = 0;
+    key *keyp;
 
-    while(getword(s, MAX_LEN) != EOF) {
-        if((pos = binsearch(s, keytab, NKEYS)) > -1)
-            keytab[pos].count += 1;
-    }
+    while(getword(s, MAX_LEN) != EOF)
+        if((keyp = binsearch(s, keytab, NKEYS)))
+            keyp -> count += 1;
 
-
-    for (int i = 0; i < NKEYS; ++i)
-        if (keytab[i].count > 0)
-            printf("%-12s%3d\n", keytab[i].word, keytab[i].count);
+    print_tab(keytab, NKEYS, "Keywords:");
 
     return 0;
 }
 
 
-int binsearch(char *word, key keytab[], int tablen) {
-    int low = 0;
-    int high = tablen - 1;
+key* binsearch(char *word, key *keytab, int tablen) {
+    key *low = keytab;
+    key *high = keytab + tablen - 1;
+    key *mid;
     int cond;
 
     while(low <= high) {
-        int mid = (low + high) / 2;
-        if ((cond = strcmp(word, keytab[mid].word)) == 0)
+        mid = low + (high - low) / 2;
+        if ((cond = strcmp(word, mid -> word)) == 0)
             return mid;
         else if (cond < 0)
             high = mid - 1;
         else
             low = mid + 1;
     }
-    return -1;
+    return NULL;
+}
+
+
+void print_tab(key *tab, int len, char *word) {
+    printf("\n%s\n", word);
+    for (int i = 0; i < strlen(word); ++i)
+        printf("-");
+    printf("\n");
+
+    for (key *keyp = tab, *endp = keyp + len; keyp < endp; ++keyp)
+        if (keyp -> count)
+            printf("%-15s%3d\n", keyp -> word, keyp -> count);
 }
